@@ -1,0 +1,504 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Games - LuckyZone</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #170d3d, #38218a);
+    color: white;
+    min-height: 100vh;
+}
+
+.navbar {
+    background: #0d0826;
+    min-height: 80px;
+    padding: 15px 7%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+}
+
+.logo {
+    color: #ffd700;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.nav-links {
+    display: flex;
+    gap: 20px;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.nav-links a {
+    color: white;
+    text-decoration: none;
+    font-size: 14px;
+}
+
+.nav-links a:hover {
+    color: #ffd700;
+}
+
+.signup-btn {
+    background: #ffd700;
+    color: #170d3d !important;
+    padding: 10px 16px;
+    border-radius: 8px;
+    font-weight: bold;
+}
+
+.container {
+    max-width: 1150px;
+    margin: auto;
+    padding: 55px 20px;
+}
+
+.hero {
+    text-align: center;
+    margin-bottom: 45px;
+}
+
+.hero h1 {
+    color: #ffd700;
+    font-size: clamp(32px, 5vw, 48px);
+    margin-bottom: 15px;
+}
+
+.hero p {
+    color: #ded8ff;
+    line-height: 1.7;
+}
+
+.coins {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 12px 22px;
+    background: rgba(255, 215, 0, 0.12);
+    border: 1px solid #ffd700;
+    border-radius: 30px;
+    color: #ffd700;
+    font-weight: bold;
+}
+
+.games-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 25px;
+}
+
+.game-card {
+    background: rgba(255, 255, 255, 0.08);
+    border: 1px solid rgba(255, 215, 0, 0.35);
+    border-radius: 20px;
+    padding: 30px 22px;
+    text-align: center;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+    transition: transform 0.25s, border-color 0.25s;
+}
+
+.game-card:hover {
+    transform: translateY(-7px);
+    border-color: #ffd700;
+}
+
+.game-icon {
+    font-size: 65px;
+    margin-bottom: 18px;
+}
+
+.game-card h2 {
+    color: #ffd700;
+    margin-bottom: 12px;
+}
+
+.game-card p {
+    color: #ded8ff;
+    line-height: 1.6;
+    min-height: 70px;
+    margin-bottom: 22px;
+}
+
+.play-btn {
+    background: #ffd700;
+    color: #170d3d;
+    border: none;
+    border-radius: 9px;
+    padding: 13px 20px;
+    font-size: 15px;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+}
+
+.play-btn:hover {
+    background: #ffe65c;
+}
+
+.game-area {
+    display: none;
+    margin-top: 35px;
+    padding: 30px 20px;
+    text-align: center;
+    background: rgba(13, 8, 38, 0.75);
+    border: 1px solid #ffd700;
+    border-radius: 20px;
+}
+
+.game-area h2 {
+    color: #ffd700;
+    margin-bottom: 15px;
+}
+
+.game-area p {
+    color: #ded8ff;
+    line-height: 1.7;
+    margin-bottom: 20px;
+}
+
+.result {
+    margin: 20px 0;
+    font-size: 20px;
+    font-weight: bold;
+    color: #ffd700;
+    min-height: 28px;
+}
+
+.spin-wheel {
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin: 25px auto;
+    border: 5px solid #ffd700;
+    background: conic-gradient(
+        #ffd700 0deg 60deg,
+        #38218a 60deg 120deg,
+        #ff5e9c 120deg 180deg,
+        #38218a 180deg 240deg,
+        #00c9a7 240deg 300deg,
+        #38218a 300deg 360deg
+    );
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 30px;
+    transition: transform 1s;
+}
+
+.target-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 75px);
+    justify-content: center;
+    gap: 10px;
+    margin: 20px auto;
+}
+
+.target-grid button,
+.card-choice {
+    background: #38218a;
+    color: white;
+    border: 1px solid #ffd700;
+    border-radius: 12px;
+    height: 65px;
+    font-size: 24px;
+    cursor: pointer;
+}
+
+.target-grid button:hover,
+.card-choice:hover {
+    background: #6246c5;
+}
+
+.card-choices {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.card-choice {
+    width: 85px;
+    height: 110px;
+    font-size: 35px;
+}
+
+.back-btn {
+    margin-top: 15px;
+    background: transparent;
+    border: 1px solid #ffd700;
+    color: #ffd700;
+    padding: 10px 20px;
+    border-radius: 8px;
+    cursor: pointer;
+}
+
+footer {
+    text-align: center;
+    padding: 25px;
+    background: #0d0826;
+    color: #aaa;
+    margin-top: 50px;
+}
+
+@media (max-width: 850px) {
+    .games-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .game-card p {
+        min-height: auto;
+    }
+
+    .navbar {
+        justify-content: center;
+    }
+
+    .nav-links {
+        justify-content: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<nav class="navbar">
+    <div class="logo">👑 LuckyZone</div>
+
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="about.html">About</a>
+        <a href="signin.html">Sign In</a>
+        <a href="signup.html" class="signup-btn">Sign Up</a>
+    </div>
+</nav>
+
+<main class="container">
+
+    <section class="hero">
+        <h1>🎮 Welcome to LuckyZone Games</h1>
+        <p>Choose a game, test your luck, and enjoy the fun!</p>
+        <div class="coins">🪙 Virtual Coins: <span id="coinBalance">1000</span></div>
+    </section>
+
+    <section class="games-grid">
+
+        <div class="game-card">
+            <div class="game-icon">🎡</div>
+            <h2>Lucky Spin</h2>
+            <p>Spin the colorful wheel and see which virtual coin reward you land on.</p>
+            <button class="play-btn" onclick="openGame('spinGame')">
+                Play Lucky Spin
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🎯</div>
+            <h2>Lucky Target</h2>
+            <p>Choose a target tile and see whether you discover a bonus reward.</p>
+            <button class="play-btn" onclick="openGame('targetGame')">
+                Play Lucky Target
+            </button>
+        </div>
+
+        <div class="game-card">
+            <div class="game-icon">🃏</div>
+            <h2>Lucky Cards</h2>
+            <p>Pick a mystery card and reveal your virtual coin reward.</p>
+            <button class="play-btn" onclick="openGame('cardsGame')">
+                Play Lucky Cards
+            </button>
+        </div>
+
+    </section>
+
+    <!-- LUCKY SPIN -->
+    <section class="game-area" id="spinGame">
+        <h2>🎡 Lucky Spin</h2>
+        <p>Press spin to discover your virtual reward.</p>
+
+        <div class="spin-wheel" id="wheel">⭐</div>
+
+        <button class="play-btn" onclick="spinWheel()">
+            SPIN THE WHEEL
+        </button>
+
+        <div class="result" id="spinResult"></div>
+        <button class="back-btn" onclick="closeGames()">Back to Games</button>
+    </section>
+
+    <!-- LUCKY TARGET -->
+    <section class="game-area" id="targetGame">
+        <h2>🎯 Lucky Target</h2>
+        <p>Choose one of the nine tiles. Find the bonus for virtual coins!</p>
+
+        <div class="target-grid" id="targetGrid">
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+            <button onclick="chooseTarget(this)">?</button>
+        </div>
+
+        <div class="result" id="targetResult"></div>
+        <button class="play-btn" onclick="resetTarget()">Try Another Round</button>
+        <button class="back-btn" onclick="closeGames()">Back to Games</button>
+    </section>
+
+    <!-- LUCKY CARDS -->
+    <section class="game-area" id="cardsGame">
+        <h2>🃏 Lucky Cards</h2>
+        <p>Pick one card to reveal your virtual coin reward.</p>
+
+        <div class="card-choices">
+            <button class="card-choice" onclick="chooseCard(this)">?</button>
+            <button class="card-choice" onclick="chooseCard(this)">?</button>
+            <button class="card-choice" onclick="chooseCard(this)">?</button>
+        </div>
+
+        <div class="result" id="cardsResult"></div>
+        <button class="play-btn" onclick="resetCards()">Play Again</button>
+        <button class="back-btn" onclick="closeGames()">Back to Games</button>
+    </section>
+
+</main>
+
+<footer>
+    <p>© 2026 LuckyZone. Have fun playing!</p>
+    <p style="margin-top: 8px;">Virtual coins only — no real-money rewards.</p>
+</footer>
+
+<script>
+let coins = Number(localStorage.getItem("luckyzoneCoins")) || 1000;
+let targetPlayed = false;
+let cardsPlayed = false;
+let spinPlayed = false;
+
+function updateCoins() {
+    document.getElementById("coinBalance").textContent = coins;
+    localStorage.setItem("luckyzoneCoins", String(coins));
+}
+
+function openGame(gameId) {
+    closeGames();
+    document.getElementById(gameId).style.display = "block";
+    document.getElementById(gameId).scrollIntoView({
+        behavior: "smooth",
+        block: "center"
+    });
+}
+
+function closeGames() {
+    document.querySelectorAll(".game-area").forEach(function(game) {
+        game.style.display = "none";
+    });
+}
+
+function spinWheel() {
+    if (spinPlayed) {
+        document.getElementById("spinResult").textContent =
+            "You have spun this round! Choose another game.";
+        return;
+    }
+
+    spinPlayed = true;
+
+    const rewards = [10, 25, 50, 100, 200, 500];
+    const reward = rewards[Math.floor(Math.random() * rewards.length)];
+
+    const wheel = document.getElementById("wheel");
+    wheel.style.transform =
+        "rotate(" + (720 + Math.floor(Math.random() * 1440)) + "deg)";
+
+    coins += reward;
+    updateCoins();
+
+    document.getElementById("spinResult").textContent =
+        "🎉 You received " + reward + " virtual coins!";
+
+    setTimeout(function() {
+        spinPlayed = false;
+    }, 1500);
+}
+
+function chooseTarget(button) {
+    if (targetPlayed) return;
+
+    targetPlayed = true;
+
+    const reward = Math.floor(Math.random() * 101);
+    button.textContent = "🎯";
+    button.style.background = "#00a884";
+
+    coins += reward;
+    updateCoins();
+
+    document.getElementById("targetResult").textContent =
+        "You found " + reward + " virtual coins!";
+}
+
+function resetTarget() {
+    targetPlayed = false;
+
+    document.querySelectorAll("#targetGrid button").forEach(function(button) {
+        button.textContent = "?";
+        button.style.background = "#38218a";
+    });
+
+    document.getElementById("targetResult").textContent = "";
+}
+
+function chooseCard(button) {
+    if (cardsPlayed) return;
+
+    cardsPlayed = true;
+
+    const rewards = [10, 25, 50, 100, 250];
+    const reward = rewards[Math.floor(Math.random() * rewards.length)];
+
+    button.textContent = "⭐";
+    button.style.background = "#6246c5";
+
+    coins += reward;
+    updateCoins();
+
+    document.getElementById("cardsResult").textContent =
+        "🎉 Your card revealed " + reward + " virtual coins!";
+}
+
+function resetCards() {
+    cardsPlayed = false;
+
+    document.querySelectorAll(".card-choice").forEach(function(card) {
+        card.textContent = "?";
+        card.style.background = "#38218a";
+    });
+
+    document.getElementById("cardsResult").textContent = "";
+}
+
+updateCoins();
+</script>
+
+</body>
+</html>

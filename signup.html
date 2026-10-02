@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Sign Up - LuckyZone</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #160b38, #392080);
+            color: white;
+            min-height: 100vh;
+        }
+
+        nav {
+            height: 70px;
+            background: #0d0620;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ffd400;
+        }
+
+        nav a {
+            color: white;
+            text-decoration: none;
+            margin-left: 25px;
+        }
+
+        .container {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: calc(100vh - 70px);
+            padding: 30px;
+        }
+
+        .card {
+            width: 390px;
+            background: rgba(255, 255, 255, 0.10);
+            border: 1px solid rgba(255, 212, 0, 0.5);
+            border-radius: 18px;
+            padding: 35px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .crown {
+            text-align: center;
+            font-size: 50px;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 10px 0;
+        }
+
+        .subtitle {
+            text-align: center;
+            color: #ccc;
+            margin-bottom: 30px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 7px;
+            font-weight: bold;
+        }
+
+        input {
+            width: 100%;
+            padding: 13px;
+            margin-bottom: 18px;
+            border-radius: 9px;
+            border: 1px solid #a88b31;
+            background: rgba(255,255,255,0.12);
+            color: white;
+            font-size: 16px;
+            outline: none;
+        }
+
+        input:focus {
+            border-color: #ffd400;
+        }
+
+        input::placeholder {
+            color: #bbb;
+        }
+
+        button {
+            width: 100%;
+            padding: 14px;
+            border: none;
+            border-radius: 9px;
+            background: #ffd400;
+            color: #111;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background: #ffdf3b;
+        }
+
+        #message {
+            text-align: center;
+            margin: 15px 0;
+            min-height: 20px;
+            font-weight: bold;
+        }
+
+        .bottom {
+            text-align: center;
+            margin-top: 25px;
+            color: #ccc;
+        }
+
+        .bottom a {
+            color: #ffd400;
+            text-decoration: none;
+            font-weight: bold;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <div class="logo">👑 LuckyZone</div>
+
+    <div>
+        <a href="index.html">Home</a>
+        <a href="games.html">Games</a>
+        <a href="leaderboard.html">Leaderboard</a>
+        <a href="about.html">About</a>
+        <a href="signin.html">Sign In</a>
+    </div>
+</nav>
+
+<div class="container">
+
+    <div class="card">
+
+        <div class="crown">👑</div>
+
+        <h1>Create Account</h1>
+
+        <div class="subtitle">
+            Join LuckyZone and start playing!
+        </div>
+
+        <form id="signupForm">
+
+            <label for="username">Username</label>
+            <input
+                type="text"
+                id="username"
+                placeholder="Choose a username"
+                required
+            >
+
+            <label for="email">Email</label>
+            <input
+                type="email"
+                id="email"
+                placeholder="Enter your email"
+                required
+            >
+
+            <label for="password">Password</label>
+            <input
+                type="password"
+                id="password"
+                placeholder="Create a password"
+                minlength="6"
+                required
+            >
+
+            <label for="confirmPassword">Confirm Password</label>
+            <input
+                type="password"
+                id="confirmPassword"
+                placeholder="Enter password again"
+                minlength="6"
+                required
+            >
+
+            <div id="message"></div>
+
+            <button type="submit">
+                Create Account
+            </button>
+
+        </form>
+
+        <div class="bottom">
+            Already have an account?
+            <a href="signin.html">Sign In</a>
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const form = document.getElementById("signupForm");
+const message = document.getElementById("message");
+
+form.addEventListener("submit", async function(event) {
+
+    event.preventDefault();
+
+    const username = document.getElementById("username").value.trim();
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+    const confirmPassword =
+        document.getElementById("confirmPassword").value;
+
+    message.textContent = "";
+
+    if (password !== confirmPassword) {
+
+        message.style.color = "#ff5555";
+        message.textContent = "Passwords do not match.";
+
+        return;
+    }
+
+    message.style.color = "#ffd400";
+    message.textContent = "Creating account...";
+
+    try {
+
+        const response = await fetch(
+            "http://127.0.0.1:5000/signup",
+            {
+                method: "POST",
+
+                headers: {
+                    "Content-Type": "application/json"
+                },
+
+                body: JSON.stringify({
+                    username: username,
+                    email: email,
+                    password: password
+                })
+            }
+        );
+
+        const data = await response.json();
+
+        console.log("Server response:", data);
+
+        if (data.success) {
+
+            message.style.color = "#00ff88";
+            message.textContent =
+                "Account created successfully!";
+
+            setTimeout(function() {
+
+                window.location.href = "signin.html";
+
+            }, 1500);
+
+        } else {
+
+            message.style.color = "#ff5555";
+            message.textContent =
+                data.message || "Account creation failed.";
+
+        }
+
+    } catch (error) {
+
+        console.error("Connection error:", error);
+
+        message.style.color = "#ff5555";
+
+        message.textContent =
+            "Cannot connect to LuckyZone server. Make sure Flask is running.";
+
+    }
+
+});
+
+</script>
+
+</body>
+</html>

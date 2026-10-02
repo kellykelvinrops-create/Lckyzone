@@ -1,0 +1,484 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>About - LuckyZone</title>
+
+    <style>
+
+        /* =========================
+           RESET
+        ========================= */
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+
+        /* =========================
+           BODY
+        ========================= */
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(135deg, #170d3d, #38218a);
+            color: white;
+        }
+
+
+        /* =========================
+           NAVBAR
+        ========================= */
+
+        .navbar {
+            height: 80px;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 7%;
+            background: #0d0826;
+        }
+
+        .logo {
+            font-size: 25px;
+            font-weight: bold;
+            color: #ffd700;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 30px;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+        }
+
+        .nav-links a:hover {
+            color: #ffd700;
+        }
+
+        .nav-buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        .signin-btn,
+        .signup-btn {
+            padding: 10px 20px;
+            border-radius: 8px;
+            text-decoration: none;
+            font-weight: bold;
+        }
+
+        .signin-btn {
+            border: 1px solid #ffd700;
+            color: white;
+        }
+
+        .signup-btn {
+            background: #ffd700;
+            color: #17113d;
+        }
+
+
+        /* =========================
+           ABOUT SECTION
+        ========================= */
+
+        .about-container {
+            max-width: 1000px;
+            margin: auto;
+            padding: 70px 25px;
+        }
+
+
+        /* =========================
+           HERO
+        ========================= */
+
+        .about-hero {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .about-hero .crown {
+            font-size: 70px;
+            margin-bottom: 15px;
+        }
+
+        .about-hero h1 {
+            font-size: 45px;
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .about-hero p {
+            color: #d0cbe8;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           CARDS
+        ========================= */
+
+        .about-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        .about-card {
+            padding: 30px;
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 18px;
+            text-align: center;
+            transition: 0.3s;
+        }
+
+        .about-card:hover {
+            transform: translateY(-5px);
+            border-color: #ffd700;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+        }
+
+        .about-card .icon {
+            font-size: 45px;
+            margin-bottom: 15px;
+        }
+
+        .about-card h2 {
+            color: #ffd700;
+            margin-bottom: 12px;
+        }
+
+        .about-card p {
+            color: #d0cbe8;
+            line-height: 1.6;
+        }
+
+
+        /* =========================
+           MAIN INFORMATION
+        ========================= */
+
+        .about-info {
+            background: rgba(255, 255, 255, 0.08);
+            border: 1px solid rgba(255, 215, 0, 0.25);
+            border-radius: 20px;
+            padding: 40px;
+            margin-bottom: 40px;
+        }
+
+        .about-info h2 {
+            color: #ffd700;
+            margin-bottom: 15px;
+        }
+
+        .about-info p {
+            color: #ddd;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+
+        /* =========================
+           BUTTON
+        ========================= */
+
+        .home-button {
+            display: block;
+            width: fit-content;
+            margin: 30px auto 0;
+            padding: 14px 30px;
+            background: #ffd700;
+            color: #17113d;
+            border-radius: 10px;
+            text-decoration: none;
+            font-weight: bold;
+            transition: 0.2s;
+        }
+
+        .home-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255, 215, 0, 0.3);
+        }
+
+
+        /* =========================
+           FOOTER
+        ========================= */
+
+        footer {
+            text-align: center;
+            padding: 30px;
+            background: #0d0826;
+            color: #aaa;
+        }
+
+
+        /* =========================
+           MOBILE
+        ========================= */
+
+        @media (max-width: 800px) {
+
+            .navbar {
+                padding: 0 20px;
+            }
+
+            .nav-links {
+                display: none;
+            }
+
+            .about-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .about-hero h1 {
+                font-size: 35px;
+            }
+
+            .about-info {
+                padding: 25px;
+            }
+        }
+
+    </style>
+</head>
+
+
+<body>
+
+
+    <!-- =========================
+         NAVIGATION
+    ========================= -->
+
+    <nav class="navbar">
+
+        <div class="logo">
+            👑 LuckyZone
+        </div>
+
+
+        <div class="nav-links">
+
+            <a href="index.html">
+                Home
+            </a>
+
+            <a href="games.html">
+                Games
+            </a>
+
+            <a href="leaderboard.html">
+                Leaderboard
+            </a>
+
+            <a href="about.html">
+                About
+            </a>
+
+        </div>
+
+
+        <div class="nav-buttons">
+
+            <a
+                href="signin.html"
+                class="signin-btn"
+            >
+                Sign In
+            </a>
+
+            <a
+                href="signup.html"
+                class="signup-btn"
+            >
+                Sign Up
+            </a>
+
+        </div>
+
+    </nav>
+
+
+
+    <!-- =========================
+         ABOUT CONTENT
+    ========================= -->
+
+    <main class="about-container">
+
+
+        <!-- HERO -->
+
+        <section class="about-hero">
+
+            <div class="crown">
+                👑
+            </div>
+
+            <h1>
+                About LuckyZone
+            </h1>
+
+            <p>
+                Welcome to LuckyZone — a fun gaming
+                platform where players can challenge
+                themselves, collect coins and compete
+                on the leaderboard.
+            </p>
+
+        </section>
+
+
+
+        <!-- THREE CARDS -->
+
+        <section class="about-grid">
+
+
+            <div class="about-card">
+
+                <div class="icon">
+                    🎮
+                </div>
+
+                <h2>
+                    Play
+                </h2>
+
+                <p>
+                    Enjoy different games and challenges
+                    designed to keep you entertained.
+                </p>
+
+            </div>
+
+
+
+            <div class="about-card">
+
+                <div class="icon">
+                    🏆
+                </div>
+
+                <h2>
+                    Compete
+                </h2>
+
+                <p>
+                    Challenge yourself and see how your
+                    score compares on the leaderboard.
+                </p>
+
+            </div>
+
+
+
+            <div class="about-card">
+
+                <div class="icon">
+                    🪙
+                </div>
+
+                <h2>
+                    Earn Coins
+                </h2>
+
+                <p>
+                    Play games, collect virtual coins and
+                    use them throughout your LuckyZone
+                    experience.
+                </p>
+
+            </div>
+
+        </section>
+
+
+
+        <!-- ABOUT INFORMATION -->
+
+        <section class="about-info">
+
+            <h2>
+                What is LuckyZone?
+            </h2>
+
+            <p>
+                LuckyZone is a gaming website created
+                to bring simple, fun and interactive
+                games together in one place.
+            </p>
+
+
+            <h2>
+                Our Games
+            </h2>
+
+            <p>
+                LuckyZone includes games such as Lucky
+                Spin, Lucky Target and Lucky Cards.
+                Each game provides a different challenge
+                and gives players a chance to improve
+                their scores.
+            </p>
+
+
+            <h2>
+                Our Goal
+            </h2>
+
+            <p>
+                Our goal is to create a simple and
+                enjoyable gaming experience with an
+                exciting interface, challenges and
+                friendly competition.
+            </p>
+
+
+            <a
+                href="index.html"
+                class="home-button"
+            >
+                🏠 Back to Home
+            </a>
+
+        </section>
+
+    </main>
+
+
+
+    <!-- =========================
+         FOOTER
+    ========================= -->
+
+    <footer>
+
+        <p>
+            👑 LuckyZone © 2026
+        </p>
+
+        <p>
+            Play • Compete • Have Fun
+        </p>
+
+    </footer>
+
+
+</body>
+</html>

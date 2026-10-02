@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>LuckyZone | Play games, win virtual coins</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+  <!-- HEADER -->
+  <header class="site-header">
+    <a href="index.html" class="logo">👑 LuckyZone</a>
+
+    <nav class="main-nav" aria-label="Main">
+      <a href="index.html">Home</a>
+      <a href="games.html">Games</a>
+      <a href="leaderboard.html">Leaderboard</a>
+      <a href="about.html">About</a>
+    </nav>
+
+    <div class="auth-buttons">
+      <a href="signin.html" class="signin">Sign In</a>
+      <a href="signup.html" class="signup">Sign Up</a>
+    </div>
+  </header>
+
+  <main>
+
+    <!-- HERO -->
+    <section class="hero" id="home">
+      <div class="hero-content">
+        <h1>Welcome to <span>LuckyZone</span> 👑</h1>
+        <p>Enter the zone, play exciting games, collect virtual coins, and climb the leaderboard.</p>
+
+        <div class="hero-buttons">
+          <a href="#lucky-spin" class="play-btn">🎮 Play Now</a>
+          <a href="#games" class="games-btn">Explore Games</a>
+        </div>
+      </div>
+
+      <div class="games-preview">
+        <a href="#lucky-spin" class="preview-card">
+          <div class="game-icon">🎰</div>
+          <h3>Lucky Spin</h3>
+          <p>Try your luck</p>
+        </a>
+
+        <a href="#lucky-target" class="preview-card">
+          <div class="game-icon">🎯</div>
+          <h3>Lucky Target</h3>
+          <p>Hit the target</p>
+        </a>
+
+        <a href="#lucky-cards" class="preview-card">
+          <div class="game-icon">🃏</div>
+          <h3>Lucky Cards</h3>
+          <p>Test your strategy</p>
+        </a>
+      </div>
+    </section>
+
+    <!-- LUCKY SPIN -->
+    <section class="lucky-spin" id="lucky-spin">
+      <h2>🎰 Lucky Spin</h2>
+      <p class="section-sub">Spin the wheel and win virtual coins! Each spin costs 100 coins.</p>
+
+      <div class="spin-panel">
+        <div class="coin-display">🪙 Coins: <span class="coin-count">1000</span></div>
+        <div class="spin-wheel" id="spin-wheel">🎰</div>
+        <button id="spin-btn" class="spin-btn">SPIN 🎯</button>
+        <p id="result" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- LUCKY TARGET -->
+    <section class="lucky-target" id="lucky-target">
+      <h2>🎯 Lucky Target</h2>
+      <p class="section-sub">Hit the target as many times as you can in 15 seconds. Entry costs 50 coins, and each hit pays 20.</p>
+
+      <div class="spin-panel target-panel">
+        <div class="coin-display">🪙 Coins: <span class="coin-count">1000</span></div>
+        <div class="target-stats">
+          <span>Hits: <strong id="target-hits">0</strong></span>
+          <span>Time: <strong id="target-time">15</strong>s</span>
+        </div>
+        <div class="target-arena" id="target-arena">
+          <button class="target-btn" id="target-btn" aria-label="Target" hidden>🎯</button>
+        </div>
+        <button id="target-start" class="spin-btn">START</button>
+        <p class="game-result" id="target-result" aria-live="polite"></p>
+      </div>
+    </section>
+
+    <!-- LUCKY CARDS -->
+    <section class="lucky-cards" id="lucky-cards">
+      <h2>🃏 Lucky Cards</h2>
+      <p class="section-sub">One card hides 200 coins, one hides 75, and one is a bust.</p>
+
+      <div class="spin-panel cards-panel">
+        <div class="coin-display">🪙 Coins: <span class="coin-count">1000</span></div>
+        <div class="card-row">
+          <button class="play-card" aria-label="Card 1">❓</button>
+          <button class="play-card" aria-label="Card 2">❓</button>
+          <button class="play-card" aria-label="Card 3">❓</button>
+        </div>
+        <p class="game-result" id="cards-result" aria-live="polite"></p>
+        <button id="cards-reset" class="spin-btn" hidden>PLAY AGAIN</button>
+      </div>
+    </section>
+
+    <!-- GAMES -->
+    <section class="games" id="games">
+      <h2>🎮 Play Our Games</h2>
+      <p class="section-sub">Choose a game and win coins!</p>
+
+      <div class="game-container">
+        <div class="game-card">
+          <div class="game-icon">🎰</div>
+          <h3>Lucky Spin</h3>
+          <p>Try your luck and win virtual coins.</p>
+          <a href="#lucky-spin" class="game-btn">Play now</a>
+        </div>
+
+        <div class="game-card">
+          <div class="game-icon">🎯</div>
+          <h3>Lucky Target</h3>
+          <p>Hit the target and collect coins.</p>
+          <a href="#lucky-target" class="game-btn">Play now</a>
+        </div>
+
+        <div class="game-card">
+          <div class="game-icon">🃏</div>
+          <h3>Lucky Cards</h3>
+          <p>Pick a card and test your luck.</p>
+          <a href="#lucky-cards" class="game-btn">Play now</a>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer class="site-footer">
+    <p>© 2026 LuckyZone. Virtual coins only, no real money.</p>
+    <button id="reset-coins" class="reset-btn">Reset coins to 1000</button>
+  </footer>
+
+  <script src="script.js"></script>
+</body>
+</html>

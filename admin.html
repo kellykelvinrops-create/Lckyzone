@@ -1,0 +1,607 @@
+```html
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>LuckyZone Administration Center</title>
+
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #f4f6f9;
+            color: #222;
+        }
+
+        header {
+            background: #111827;
+            color: white;
+            padding: 20px 30px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        header h1 {
+            font-size: 24px;
+        }
+
+        header p {
+            color: #9ca3af;
+            margin-top: 5px;
+        }
+
+        .container {
+            padding: 30px;
+        }
+
+        .cards {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 25px;
+        }
+
+        .card {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+        }
+
+        .card h3 {
+            color: #6b7280;
+            margin-bottom: 10px;
+        }
+
+        .number {
+            font-size: 32px;
+            font-weight: bold;
+        }
+
+        .panel {
+            background: white;
+            padding: 25px;
+            border-radius: 12px;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.08);
+            margin-bottom: 25px;
+        }
+
+        .panel h2 {
+            margin-bottom: 20px;
+        }
+
+        button {
+            border: none;
+            padding: 11px 16px;
+            border-radius: 7px;
+            cursor: pointer;
+            font-weight: bold;
+            margin-right: 8px;
+            margin-bottom: 8px;
+        }
+
+        .blue {
+            background: #2563eb;
+            color: white;
+        }
+
+        .red {
+            background: #dc2626;
+            color: white;
+        }
+
+        .green {
+            background: #16a34a;
+            color: white;
+        }
+
+        button:hover {
+            opacity: 0.85;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th,
+        td {
+            padding: 13px;
+            border-bottom: 1px solid #e5e7eb;
+            text-align: left;
+        }
+
+        th {
+            background: #f9fafb;
+        }
+
+        .hidden {
+            display: none;
+        }
+
+        input {
+            padding: 11px;
+            border: 1px solid #d1d5db;
+            border-radius: 7px;
+            margin-right: 8px;
+        }
+
+        @media (max-width: 800px) {
+            .cards {
+                grid-template-columns: 1fr;
+            }
+
+            .container {
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    <div>
+        <h1>LuckyZone Administration Center</h1>
+        <p>System Management Dashboard</p>
+    </div>
+
+    <button class="red" onclick="logout()">Logout</button>
+</header>
+
+<div class="container">
+
+    <!-- DASHBOARD -->
+
+    <div class="cards">
+
+        <div class="card">
+            <h3>Total Users</h3>
+            <div class="number" id="totalUsers">0</div>
+        </div>
+
+        <div class="card">
+            <h3>Active Users</h3>
+            <div class="number" id="activeUsers">0</div>
+        </div>
+
+        <div class="card">
+            <h3>Total Games</h3>
+            <div class="number" id="totalGames">0</div>
+        </div>
+
+    </div>
+
+
+    <!-- USER MANAGEMENT -->
+
+    <div class="panel">
+
+        <h2>Manage Users</h2>
+
+        <button class="blue" onclick="loadUsers()">
+            Load Users
+        </button>
+
+        <div id="usersSection" class="hidden">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Email</th>
+                        <th>Coins</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="usersTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- GAME MANAGEMENT -->
+
+    <div class="panel">
+
+        <h2>Game Management</h2>
+
+        <input
+            type="text"
+            id="gameName"
+            placeholder="Enter game name"
+        >
+
+        <button class="green" onclick="addGame()">
+            Add Game
+        </button>
+
+        <button class="blue" onclick="loadGames()">
+            Load Games
+        </button>
+
+        <div id="gamesSection" class="hidden">
+
+            <table>
+
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Game</th>
+                        <th>Status</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+
+                <tbody id="gamesTable"></tbody>
+
+            </table>
+
+        </div>
+
+    </div>
+
+
+    <!-- SYSTEM SETTINGS -->
+
+    <div class="panel">
+
+        <h2>System Settings</h2>
+
+        <p>
+            LuckyZone backend administration controls.
+        </p>
+
+        <br>
+
+        <button class="blue" onclick="refreshDashboard()">
+            Refresh Dashboard
+        </button>
+
+    </div>
+
+</div>
+
+
+<script>
+
+    // -------------------------
+    // LOAD DASHBOARD
+    // -------------------------
+
+    async function refreshDashboard() {
+
+        try {
+
+            const response = await fetch("/admin/dashboard");
+
+            const data = await response.json();
+
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+
+            document.getElementById("totalUsers").textContent =
+                data.total_users;
+
+            document.getElementById("activeUsers").textContent =
+                data.active_users;
+
+            document.getElementById("totalGames").textContent =
+                data.total_games;
+
+        } catch (error) {
+
+            alert("Could not connect to the LuckyZone server.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // LOAD USERS
+    // -------------------------
+
+    async function loadUsers() {
+
+        try {
+
+            const response = await fetch("/admin/users");
+
+            const data = await response.json();
+
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+
+            const table =
+                document.getElementById("usersTable");
+
+            table.innerHTML = "";
+
+            data.users.forEach(user => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${user.id}</td>
+                    <td>${user.username}</td>
+                    <td>${user.email}</td>
+                    <td>${user.coins}</td>
+                    <td>
+                        <button
+                            class="red"
+                            onclick="deleteUser(${user.id})">
+                            Delete
+                        </button>
+                    </td>
+                `;
+
+                table.appendChild(row);
+
+            });
+
+            document
+                .getElementById("usersSection")
+                .classList.remove("hidden");
+
+        } catch (error) {
+
+            alert("Could not load users.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // DELETE USER
+    // -------------------------
+
+    async function deleteUser(id) {
+
+        const confirmed =
+            confirm("Are you sure you want to delete this user?");
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(`/admin/users/${id}`, {
+                    method: "DELETE"
+                });
+
+            const data = await response.json();
+
+            alert(data.message);
+
+            if (data.success) {
+
+                loadUsers();
+
+                refreshDashboard();
+
+            }
+
+        } catch (error) {
+
+            alert("Could not delete user.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // LOAD GAMES
+    // -------------------------
+
+    async function loadGames() {
+
+        try {
+
+            const response =
+                await fetch("/admin/games");
+
+            const data = await response.json();
+
+            if (!data.success) {
+                alert(data.message);
+                return;
+            }
+
+            const table =
+                document.getElementById("gamesTable");
+
+            table.innerHTML = "";
+
+            data.games.forEach(game => {
+
+                const row = document.createElement("tr");
+
+                row.innerHTML = `
+                    <td>${game.id}</td>
+                    <td>${game.name}</td>
+                    <td>${game.status}</td>
+                    <td>
+                        <button
+                            class="red"
+                            onclick="deleteGame(${game.id})">
+                            Delete
+                        </button>
+                    </td>
+                `;
+
+                table.appendChild(row);
+
+            });
+
+            document
+                .getElementById("gamesSection")
+                .classList.remove("hidden");
+
+        } catch (error) {
+
+            alert("Could not load games.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // ADD GAME
+    // -------------------------
+
+    async function addGame() {
+
+        const name =
+            document.getElementById("gameName").value.trim();
+
+        if (!name) {
+
+            alert("Enter a game name first.");
+
+            return;
+
+        }
+
+        try {
+
+            const response =
+                await fetch("/admin/games", {
+
+                    method: "POST",
+
+                    headers: {
+                        "Content-Type": "application/json"
+                    },
+
+                    body: JSON.stringify({
+                        name: name
+                    })
+
+                });
+
+            const data = await response.json();
+
+            alert(data.message);
+
+            if (data.success) {
+
+                document
+                    .getElementById("gameName")
+                    .value = "";
+
+                loadGames();
+
+                refreshDashboard();
+
+            }
+
+        } catch (error) {
+
+            alert("Could not add game.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // DELETE GAME
+    // -------------------------
+
+    async function deleteGame(id) {
+
+        const confirmed =
+            confirm("Delete this game?");
+
+        if (!confirmed) {
+            return;
+        }
+
+        try {
+
+            const response =
+                await fetch(`/admin/games/${id}`, {
+                    method: "DELETE"
+                });
+
+            const data = await response.json();
+
+            alert(data.message);
+
+            if (data.success) {
+
+                loadGames();
+
+                refreshDashboard();
+
+            }
+
+        } catch (error) {
+
+            alert("Could not delete game.");
+
+        }
+
+    }
+
+
+    // -------------------------
+    // LOGOUT
+    // -------------------------
+
+    async function logout() {
+
+        try {
+
+            const response =
+                await fetch("/logout");
+
+            const data = await response.json();
+
+            window.location.href = "/";
+
+        } catch (error) {
+
+            window.location.href = "/";
+
+        }
+
+    }
+
+
+    // -------------------------
+    // START DASHBOARD
+    // -------------------------
+
+    refreshDashboard();
+
+</script>
+
+</body>
+</html>
+```
